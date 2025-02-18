@@ -1,0 +1,10 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+- level: RequestResponse
+
+
+#ALSO APPLY THESE:
+#kubectl label namespace default pod-security.kubernetes.io/enforce=restricted
+#kubectl label namespace default pod-security.kubernetes.io/audit=baseline
+#kubectl label namespace default pod-security.kubernetes.io/warn=privileged

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: confluence
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: confluence
+  template:
+    metadata:
+      labels:
+        app: confluence
+    spec:
+      containers:
+      - name: confluence
+        image: vulhub/confluence:8.5.3
+        ports:
+        - containerPort: 8090
+        env:
+        - name: ATL_DB_TYPE
+          value: "postgresql"
+        - name: ATL_DB_USERNAME
+          value: "confluence"
+        - name: ATL_DB_PASSWORD
+          value: "password"
+        volumeMounts:
+        - name: c-pv
+          mountPath: /var/atlassian/application-data/confluence
+      volumes:
+      - name: c-pv
+        persistentVolumeClaim:
+          claimName: c-pvc
